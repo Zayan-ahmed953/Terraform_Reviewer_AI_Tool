@@ -15,7 +15,7 @@ Generate production-ready Terraform documentation and inline comments using Clau
 
 1. Clone this repository:
    ```bash
-   git clone <your-repo-url>
+   git clone https://github.com/Zayan-ahmed953/Terraform_Reviewer_AI_Tool.git
    cd Terraform_AI_Reviewer
    ```
 2. (Recommended) Create and activate a virtual environment:
