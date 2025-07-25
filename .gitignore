@@ -2,3 +2,8 @@
 .v*
 build/
 terraformreviewer.egg-info/
+dist/
+terraformreviewer/__pycache__/
+PROJECT_DESCRIPTION.md
+pyproject.toml
+setup.cfg

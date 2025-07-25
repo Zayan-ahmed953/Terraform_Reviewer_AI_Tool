@@ -15,7 +15,9 @@ def read_terraform_files(project_path):
             if file.endswith(".tf"):
                 file_path = os.path.join(root, file)
                 with open(file_path, 'r', encoding='utf-8') as f:
-                    tf_code += f"\n# File: {file_path}\n" + f.read() + "\n"
+                    content = f.read()
+                    if content.strip():  # Only include non-empty files
+                        tf_code += f"\n# File: {file_path}\n" + content + "\n"
     return tf_code
 
 def compute_hash(content):
@@ -53,8 +55,11 @@ You are reviewing a Terraform project. Based on the following Terraform configur
 - Prerequisites
 - Terraform Version
 
-Make sure the README is production-ready and easy for new developers to understand.
+Make sure the README is production-ready and easy for new developers to understand. And make sure to highlight the important details in BOLD.
+Also make sure to include a section for expected cost range and another sections for possible improvements.
 
+Dont add any license or contribution related sections.
+Just start your output with the doc right away.
 Terraform Code:
 ~~~
 {tf_code}
@@ -104,12 +109,12 @@ def add_inline_comments_to_tf_files(project_path, client):
                 file_path = os.path.join(root, file)
                 with open(file_path, "r", encoding="utf-8") as f:
                     original_content = f.read()
-
+                if not original_content.strip():
+                    typer.echo(f"[!] Skipping empty file: {file_path}")
+                    continue
                 updated_content = call_claude_for_inline_comments(original_content, client)
-
                 with open(file_path, "w", encoding="utf-8") as f:
                     f.write(updated_content)
-
                 typer.echo(f"[✓] Comments added to: {file_path}")
 
 @app.command()
